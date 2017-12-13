@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+<h1 style = "text-align:center">{{header}}</h1>
+
+{% if blogs|length == 0  %}
+<p>No blogs yet</p>
+{% endif %}
+   
+{% for x in blogs %}
+    
+    {% if loop.index % 2 == 1 %}
+        <h1>{{x.name}}</h1>
+        <br>
+    {% else %}
+        <p>{{x.name}}</p>
+    {% endif %}    
+    
+    
+    
+{% endfor %}
+
+
+{% endblock %}
+
