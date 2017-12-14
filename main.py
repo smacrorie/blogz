@@ -32,8 +32,9 @@ def blog():
         content_error_message = ""
 
         blog_title = request.form['blog_title']         # pull the blog title from the newpost form
-        blog_contents = request.form['blog_contents']       
+        blog_contents = request.form['blog_contents']   # pull the blog contents from the newpost form
 
+        # error code    
         if blog_title =="" and blog_contents == "":
             title_error_message = "Please enter a title for your blog"
             content_error_message = "Please enter content for your blog"
@@ -47,21 +48,17 @@ def blog():
             return redirect('/newpost?title_error_message=' + title_error_message + '&content_error_message=' +  content_error_message +
             '&blog_title=' + blog_title + '&blog_contents=' + blog_contents)  
 
-        new_blog = Blog(blog_title,blog_contents)    # create a new Blog object
-        db.session.add(new_blog)                     # add the blog object to the session
+        single_blog = Blog(blog_title,blog_contents)    # create a new Blog object
+        db.session.add(single_blog)                     # add the blog object to the session
         db.session.commit()                          # commit the above blog object to the database
+        return render_template('individual.html', single_blog = single_blog ) # after creating a blog post, display the individual post
+        
+    blogs = Blog.query.all()                         # get all the rows of the blog table  
 
-                    
-
-        #blogs.append(blog_title)
-        #blogs.append(blog_contents)
-
-    blogs = Blog.query.all()   
-
-    if request.args.get('id') != None:
-        id = request.args.get('id')
-        single_blog = Blog.query.get(id)
-        return render_template('individual.html',blogs = blogs, single_blog = single_blog)
+    if request.args.get('id') != None:               # if a query parameter exists
+        id = request.args.get('id')                  # assign the value of the query parameter to the id variable
+        single_blog = Blog.query.get(id)             # assign the blog object with the id to a variable
+        return render_template('individual.html', single_blog = single_blog)  # pass this blog object to the template
 
     return render_template('blog.html',title = "Build A Blog", header = "Build A Blog",blogs = blogs)
              
