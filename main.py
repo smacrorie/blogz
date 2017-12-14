@@ -11,15 +11,14 @@ class Blog(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(120))
-    body = db.Column(db.String(1000))
+    body = db.Column(db.String(1000))   
 
-    def __init__(self, name):
-        self.name = name
-        self.completed = False
-
+    def __init__(self,title,body):
+        self.title = title
+        self.body = body
+        #self.completed = False        
 
 #blogs = []
-
 
 @app.route('/', methods = ['POST','GET'])
 def index():
@@ -27,6 +26,7 @@ def index():
 
 @app.route('/blog', methods = ['POST','GET'])
 def blog():
+    
     if request.method == "POST":
         title_error_message = ""
         content_error_message = ""
@@ -47,17 +47,24 @@ def blog():
             return redirect('/newpost?title_error_message=' + title_error_message + '&content_error_message=' +  content_error_message +
             '&blog_title=' + blog_title + '&blog_contents=' + blog_contents)  
 
-        #new_blog_title = Blog(blog_title)    # create a new Blog object
-        #db.session.add(new_blog_title)       # add the blog object to the session
-        #db.session.commit()                  # commit the above blog object to the database
+        new_blog = Blog(blog_title,blog_contents)    # create a new Blog object
+        db.session.add(new_blog)                     # add the blog object to the session
+        db.session.commit()                          # commit the above blog object to the database
 
-        blogs = Blog.query.all()              
+                    
 
         #blogs.append(blog_title)
         #blogs.append(blog_contents)
-       
-    return render_template('blog.html',title = "Build A Blog", header = "Build A Blog",blogs = blogs, 
-        blog_content_list = blog_content_list) 
+
+    blogs = Blog.query.all()   
+
+    if request.args.get('id') != None:
+        id = request.args.get('id')
+        single_blog = Blog.query.get(id)
+        return render_template('individual.html',blogs = blogs, single_blog = single_blog)
+
+    return render_template('blog.html',title = "Build A Blog", header = "Build A Blog",blogs = blogs)
+             
 
 @app.route('/newpost', methods = ['POST','GET'])
 def newpost():

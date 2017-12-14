@@ -9,19 +9,17 @@
 <p>No blogs yet</p>
 {% endif %}
    
-{% for x in blogs %}
-    
-    {% if loop.index % 2 == 1 %}
-        <h1>{{x.name}}</h1>
-        <br>
-    {% else %}
-        <p>{{x.name}}</p>
-    {% endif %}    
-    
-    
-    
+{% for x in blogs %}  
+    <nav>
+        <a href = '/blog?id={{loop.index}}'><h1>{{x.title}}</h1></a>
+    </nav>
+    <p>{{x.body}}</p>
+    <br>
 {% endfor %}
 
 
+
+
 {% endblock %}
+
 
