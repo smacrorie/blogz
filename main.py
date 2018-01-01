@@ -46,7 +46,7 @@ def index():
     
 
 @app.route('/signup', methods = ['POST','GET'])
-def validate_signup():
+def signup():
     if request.method == "POST":
         username_error = ''
         password_error = ''
@@ -89,7 +89,7 @@ def validate_signup():
             db.session.add(new_user)                     # add the user object to the session
             db.session.commit()                          # commit the above user object to the database 
             session['username'] = username               # session needed to be imported from Flask; it's a dictionary; setting the key
-            #return redirect ('/newpost')                # of username to the value of username...a way to 'remember' the user has logged in
+            return redirect ('/newpost')                # of username to the value of username...a way to 'remember' the user has logged in
         if existing_user:
             username_error = "Username already exists"
             return render_template('signup.html', username_error = username_error, password_error = password_error,
@@ -100,7 +100,7 @@ def validate_signup():
     return render_template('signup.html')
 
 @app.route('/login', methods = ['POST', 'GET'])
-def signup():
+def login():
     if request.method == "POST":
         username_error = ''
         password_error = ''        
@@ -142,6 +142,9 @@ def signup():
 
 @app.route('/blog', methods = ['POST','GET'])
 def blog():
+
+    #blog_title = request.form['blog_title']         # pull the blog title from the newpost form
+    #blog_contents = request.form['blog_contents']   # pull the blog contents from the newpost form
     
     if request.method == "POST":
         title_error_message = ""
@@ -176,7 +179,7 @@ def blog():
     if request.args.get('id') != None:               # if a query parameter with the name 'id' exists
         id = request.args.get('id')                  # assign the value of the query parameter to the id variable
         single_blog = Blog.query.get(id)             # assign the blog object with the id to a variable
-        user = User.query.filter_by(id = id).first()
+        user = User.query.filter_by(id = single_blog.owner_id).first()    # find the user whose id is equal to the blog object's owner_id (which is the foreign key)    
         return render_template('individual.html', single_blog = single_blog, user = user)  # pass this blog object to the template
 
     if request.args.get('user') != None:               # if a query parameter with the name 'user' exists

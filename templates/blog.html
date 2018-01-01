@@ -12,13 +12,13 @@
    
 {% for x in blogs %}  
     <nav>
-        <a href = '/blog?id={{loop.index}}'><h1>{{x.title}}</h1></a>
+        <a href = '/blog?id={{x.id}}'><h1>{{x.title}}</h1></a>
     </nav>
     <p>{{x.body}}</p>
 
     {% for y in users %}
         {% if y.id == x.owner_id %}
-            <p>written by <a href = 'blog?user={{y.username}}'>{{y.username}}</a></p>
+            <p>written by <a href = '/blog?user={{y.username}}'>{{y.username}}</a></p>
         {% endif %} 
     {% endfor %}       
     
