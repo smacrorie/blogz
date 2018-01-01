@@ -1,0 +1,26 @@
+<!doctype = html>
+<html>
+    <style>
+        .error {color: red;}       
+    </style>
+    <title>Signup</title>
+    <head>
+        <h1>Signup</h1>
+    </head>
+    <body>
+        
+        <form action = '/signup', method='post'>
+                          
+            <p>Username: <input type = 'text', name = 'username', value = '{{username}}' />
+                <span style = "color:red">{{username_error}}</span></p>        
+            <p>Password: <input type = 'password', name = 'password', value = '{{password}}' />
+                <span style = "color:red">{{password_error}}</span></p>
+            <p>Verify Password: <input type = 'password', name  ='verifypassword', value = '{{verifypassword}}' />
+                <span style = "color: red">{{verifypassword_error}}</p>         
+            <input type = "submit", value="Submit Query" />
+
+        </form>
+    </body>
+
+
+</html>

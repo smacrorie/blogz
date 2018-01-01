@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1 style = "text-align:center">{{header}}</h1>
+
+              
+{% for x in users %}
+
+    <a href = '/blog?user={{x.username}}'>{{x.username}}</a>
+    <br>
+    
+
+{% endfor %} 
+
+ 
+
+
+
+{% endblock %}

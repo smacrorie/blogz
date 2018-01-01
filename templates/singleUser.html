@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1 style = "text-align:center">{{header}}</h1>
+
+              
+{% for x in blogs %}
+
+    {% if x.owner_id == selected_user.id %}
+        <h1>{{x.title}}</h1>
+        <p>{{x.body}}</p>
+        <p>written by <a href = '/blog?user={{selected_user.username}}'>{{selected_user.username}}</a></p>
+    {% endif %}   
+
+{% endfor %} 
+
+ 
+
+
+
+{% endblock %}

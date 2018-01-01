@@ -8,16 +8,22 @@
 {% if blogs|length == 0  %}
 <p>No blogs yet</p>
 {% endif %}
+
    
 {% for x in blogs %}  
     <nav>
         <a href = '/blog?id={{loop.index}}'><h1>{{x.title}}</h1></a>
     </nav>
     <p>{{x.body}}</p>
-    <br>
+
+    {% for y in users %}
+        {% if y.id == x.owner_id %}
+            <p>written by <a href = 'blog?user={{y.username}}'>{{y.username}}</a></p>
+        {% endif %} 
+    {% endfor %}       
+    
+    
 {% endfor %}
-
-
 
 
 {% endblock %}
