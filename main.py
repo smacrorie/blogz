@@ -168,7 +168,7 @@ def blog():
         single_blog = Blog(blog_title,blog_contents,user)    # create a new Blog object; the user argument will generate the user's id because this is how the class is set up
         db.session.add(single_blog)                     # add the blog object to the session
         db.session.commit()                          # commit the above blog object to the database
-        return render_template('individual.html', single_blog = single_blog ) # after creating a blog post, display the individual post
+        return render_template('individual.html', single_blog = single_blog,user = user ) # after creating a blog post, display the individual post
         
     blogs = Blog.query.all()                         # get all the rows of the blog table  
     users = User.query.all()                        # get all the users in the users table
